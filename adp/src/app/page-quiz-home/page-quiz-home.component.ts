@@ -69,14 +69,18 @@ export class PageQuizHomeComponent implements OnInit {
       this.q += 1
     }
     if(this.q < length){
-      this.question = this.nextQuestion(this.qSet, this.q).question
-      this.answers = this.nextQuestion(this.qSet, this.q).answers
-      return(this.question, this.score, this.q)
+      setTimeout(()=>{
+        this.question = this.nextQuestion(this.qSet, this.q).question
+        this.answers = this.nextQuestion(this.qSet, this.q).answers
+      },2000)
+      
     } 
     if(this.q >= length){
-      this.view = 'result'
-      this.percent = ((this.score / length) * 100).toFixed(2)
-      return(this.percent)
+      setTimeout(()=>{
+        this.view = 'result'
+        this.percent = ((this.score / length) * 100).toFixed(2)
+      },2000)
+      
     }
   }
   
