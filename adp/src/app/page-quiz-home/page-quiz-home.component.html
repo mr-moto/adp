@@ -1,6 +1,6 @@
-<div class="content">
+<div class="content" [ngClass]="{'correct': right, 'incorrect': wrong}">
+  <p class="score" *ngIf="view=='quiz1' || view=='quiz2'">score: {{score}}</p>
   <h1 *ngIf="view=='selection'">Start</h1>
-  <p *ngIf="view=='quiz1' || view=='quiz2'">score: {{score}}</p>
   <div *ngIf="view=='selection'">
     <p>Choose Quiz:</p>
     <p class="selection" (click)="quizSelect(quiz)" *ngFor="let quiz of quizzes()">{{quiz.title}}</p>
@@ -15,12 +15,12 @@
     <div class="quiz" *ngIf="view=='quiz2'">
       <h2>{{question}}</h2>
       <div class="option-container">
-        <p class="option" *ngFor="let answer of answers; let i = index" (click)="isCorrect(i, 1)"> {{answer.content}}</p>
+        <p [ngClass]="{'correct': right }" [class.incorrect]="wrong" class="option" *ngFor="let answer of answers; let i = index" (click)="isCorrect(i, 1)"> {{answer.content}}</p>
       </div>
     </div>
   </div>
   <div *ngIf="view=='result'">
-    <h2>Score</h2>
-    <p>{{percent}}%</p>
+    <h2>Score: {{score}}</h2>
+    <p class="result" >{{result}}</p>
   </div>
 </div>

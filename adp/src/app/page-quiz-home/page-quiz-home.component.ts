@@ -18,12 +18,15 @@ export class PageQuizHomeComponent implements OnInit {
   question: string;
   answers: any[];
   val: boolean;
-  percent: string;
+  percent: number;
+  result: string;
+  right = false;
+  wrong = false;
+
 
   constructor( private quizService: QuizService ) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   quizzes(){
     let quizzes = data[0].quizzes
@@ -62,26 +65,37 @@ export class PageQuizHomeComponent implements OnInit {
     let val = this.answers[i].value
     let length = data[0].quizzes[qSet].questions.length
     if(val === true ){
-      this.score += 1;
+      this.right = true;
+      this.score += 1
       this.q += 1
     } 
     if(val === false){
+      this.wrong = true;
       this.q += 1
     }
     if(this.q < length){
       setTimeout(()=>{
         this.question = this.nextQuestion(this.qSet, this.q).question
         this.answers = this.nextQuestion(this.qSet, this.q).answers
+        this.right = false
+        this.wrong = false
       },2000)
-      
     } 
     if(this.q >= length){
       setTimeout(()=>{
         this.view = 'result'
-        this.percent = ((this.score / length) * 100).toFixed(2)
+        let percent = ((this.score / length) * 100)
+        if(percent >= 50){
+          this.right = true
+          this.result = 'pass'
+        } else{
+          this.wrong = true
+          this.result = 'fail'
+        }
       },2000)
-      
     }
   }
   
+  
+
 }
