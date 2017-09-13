@@ -1,7 +1,26 @@
-<div class="quiz-selection">
-  <h1>Start</h1>
-  <div class="selection-container">
-    <a routerLink="/quiz1" routerLinkActive="active">{{quiz1Title}}</a>
-    <a routerLink="/quiz2" routerLinkActive="active">{{quiz2Title}}</a>
+<div class="content">
+  <h1 *ngIf="view=='selection'">Start</h1>
+  <p *ngIf="view=='quiz1' || view=='quiz2'">score: {{score}}</p>
+  <div *ngIf="view=='selection'">
+    <p>Choose Quiz:</p>
+    <p class="selection" (click)="quizSelect(quiz)" *ngFor="let quiz of quizzes()">{{quiz.title}}</p>
+  </div>
+  <div class="quiz-container">
+    <div class="quiz" *ngIf="view=='quiz1'">
+      <h2>{{question}}</h2>
+      <div class="option-container">
+        <p class="option" *ngFor="let answer of answers; let i = index" (click)="isCorrect(i, 0)"> {{answer.content}}</p>
+      </div>
+    </div>
+    <div class="quiz" *ngIf="view=='quiz2'">
+      <h2>{{question}}</h2>
+      <div class="option-container">
+        <p class="option" *ngFor="let answer of answers; let i = index" (click)="isCorrect(i, 1)"> {{answer.content}}</p>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="view=='result'">
+    <h2>Score</h2>
+    <p>{{percent}}%</p>
   </div>
 </div>
